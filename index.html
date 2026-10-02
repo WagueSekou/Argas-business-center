@@ -74,6 +74,65 @@
       </div>
     </section>
 
+    <!-- ============ SLIDER ============ -->
+    <section class="showcase" aria-label="Nos produits en images">
+      <div class="container">
+        <div class="slider" id="slider" role="region" aria-roledescription="carrousel" aria-label="Nos produits en images">
+          <div class="slider-viewport">
+            <ul class="slider-track">
+              <li class="slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 4">
+                <img src="assets/slides/slide-1.jpg" alt="Matériel électrique" width="1600" height="900" draggable="false">
+                <div class="slide-caption">
+                  <p class="slide-title">Matériel électrique</p>
+                  <p class="slide-text">Câbles, disjoncteurs, prises et accessoires, en gros pour les professionnels.</p>
+                  <a class="slide-link" href="#contact">Demander un devis</a>
+                </div>
+              </li>
+              <li class="slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 4">
+                <img src="assets/slides/slide-2.jpg" alt="Électrodes de soudure SAF" width="1600" height="900" draggable="false" loading="lazy">
+                <div class="slide-caption">
+                  <p class="slide-title">Électrodes de marque SAF</p>
+                  <p class="slide-text">Les électrodes qu'il vous faut pour vos travaux de soudage, en quantité.</p>
+                  <a class="slide-link" href="#contact">Demander un devis</a>
+                </div>
+              </li>
+              <li class="slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 4">
+                <img src="assets/slides/slide-3.jpg" alt="Papier en format" width="1600" height="900" draggable="false" loading="lazy">
+                <div class="slide-caption">
+                  <p class="slide-title">Papeterie</p>
+                  <p class="slide-text">Papier A4, A3 et autres formats, pour les bureaux, les écoles et les imprimeries.</p>
+                  <a class="slide-link" href="#contact">Demander un devis</a>
+                </div>
+              </li>
+              <li class="slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 4">
+                <img src="assets/slides/slide-4.jpg" alt="Un pas d'avance avec Argas Business Center" width="1600" height="900" draggable="false" loading="lazy">
+                <div class="slide-caption">
+                  <p class="slide-title">One step ahead</p>
+                  <p class="slide-text">Dites-nous vos besoins, nous vous envoyons un devis clair.</p>
+                  <a class="slide-link" href="#parcours">Voir comment commander</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="slider-btn prev" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="slider-btn next" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+
+          <div class="slider-ui">
+            <div class="slider-dots"></div>
+            <button type="button" class="slider-toggle" data-state="playing" aria-label="Mettre le défilement en pause">
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ PRODUITS / SERVICES ============ -->
     <section class="section" id="services">
       <div class="container">
@@ -195,7 +254,7 @@
             </div>
             <div>
               <dt>Horaires</dt>
-              <dd>De lundi au vendredi, 8h30 à 18h<br>Le samedi, 8h30 à 14h</dd>
+              <dd>Du lundi au vendredi, 8h30 à 18h<br>Le samedi, 8h30 à 14h</dd>
             </div>
           </dl>
         </div>
@@ -253,6 +312,6 @@
     </div>
   </footer>
 
-  <script src="js/Script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>

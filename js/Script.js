@@ -1,3 +1,7 @@
+/* =========================================================
+   ARGAS BUSINESS CENTER SARL : script.js
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   /* ---------- Année du pied de page ---------- */
   document.getElementById("year").textContent = new Date().getFullYear();
@@ -50,6 +54,112 @@ document.addEventListener("DOMContentLoaded", () => {
       { rootMargin: "-45% 0px -50% 0px" }
     );
     sections.forEach((s) => observer.observe(s));
+  }
+
+  /* ---------- Slider de la page d'accueil ---------- */
+  const slider = document.getElementById("slider");
+  if (slider) {
+    const viewport = slider.querySelector(".slider-viewport");
+    const track = slider.querySelector(".slider-track");
+    const slides = [...track.children];
+    const dotsWrap = slider.querySelector(".slider-dots");
+    const btnPrev = slider.querySelector(".slider-btn.prev");
+    const btnNext = slider.querySelector(".slider-btn.next");
+    const btnToggle = slider.querySelector(".slider-toggle");
+
+    const DELAY = 5000; // temps entre deux images, en millisecondes
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let index = 0;
+    let wantsPlay = !reduceMotion; // choix de la personne (bouton pause)
+    let hovering = false;
+    let focused = false;
+    let timer = null;
+
+    const dots = slides.map((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `Aller à l'image ${i + 1}`);
+      dot.addEventListener("click", () => { goTo(i); start(); });
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      slides.forEach((slide, k) => {
+        slide.inert = k !== index; // les images cachées ne reçoivent pas le focus clavier
+        slide.setAttribute("aria-hidden", String(k !== index));
+      });
+      dots.forEach((dot, k) => dot.setAttribute("aria-current", String(k === index)));
+    }
+
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function start() {
+      stop();
+      if (wantsPlay && !hovering && !focused && !document.hidden && slides.length > 1) {
+        timer = setInterval(() => goTo(index + 1), DELAY);
+      }
+    }
+
+    function updateToggle() {
+      btnToggle.dataset.state = wantsPlay ? "playing" : "paused";
+      btnToggle.setAttribute(
+        "aria-label",
+        wantsPlay ? "Mettre le défilement en pause" : "Reprendre le défilement"
+      );
+      track.setAttribute("aria-live", wantsPlay ? "off" : "polite");
+    }
+
+    btnPrev.addEventListener("click", () => { goTo(index - 1); start(); });
+    btnNext.addEventListener("click", () => { goTo(index + 1); start(); });
+    btnToggle.addEventListener("click", () => {
+      wantsPlay = !wantsPlay;
+      updateToggle();
+      start();
+    });
+
+    // Pause quand la souris ou le clavier est sur le slider, ou quand l'onglet est caché
+    slider.addEventListener("mouseenter", () => { hovering = true; stop(); });
+    slider.addEventListener("mouseleave", () => { hovering = false; start(); });
+    slider.addEventListener("focusin", () => { focused = true; stop(); });
+    slider.addEventListener("focusout", () => { focused = false; start(); });
+    document.addEventListener("visibilitychange", start);
+
+    // Flèches du clavier
+    slider.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { goTo(index - 1); start(); }
+      if (e.key === "ArrowRight") { goTo(index + 1); start(); }
+    });
+
+    // Balayage au doigt (téléphone et tablette)
+    let startX = null;
+    let startY = null;
+    viewport.addEventListener("pointerdown", (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+    viewport.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      startX = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        goTo(index + (dx < 0 ? 1 : -1));
+        start();
+      }
+    });
+    viewport.addEventListener("pointercancel", () => { startX = null; });
+
+    goTo(0);
+    updateToggle();
+    start();
   }
 
   /* ---------- Formulaire de contact ---------- */
