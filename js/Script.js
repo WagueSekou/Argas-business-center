@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------- Envoi de la demande par e-mail ----------
      Le service gratuit FormSubmit reçoit les données du formulaire
      et les transmet par e-mail à l'adresse ci-dessous. */
-  const TO_EMAIL = "noeltouani@yahoo.fr";
+  const TO_EMAIL = "waguesekounick@gmail.com";
   const ENDPOINT = "https://formsubmit.co/ajax/" + TO_EMAIL;
   const submitBtn = form.querySelector('button[type="submit"]');
   const submitLabel = submitBtn.textContent;
