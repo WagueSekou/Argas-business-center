@@ -283,7 +283,13 @@
           </dl>
         </div>
 
-        <form class="form" id="contactForm" novalidate>
+        <form class="form" id="contactForm" action="https://formsubmit.co/waguesekounick@gmail.com" method="POST"  novalidate>
+          <!-- Réglages du service d'envoi (invisibles pour le visiteur) -->
+          <input type="hidden" name="_subject" value="Nouvelle demande de devis - Argas Business Center">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
           <div class="field">
             <label for="nom">Nom complet</label>
             <input type="text" id="nom" name="nom" autocomplete="name" required>

@@ -199,11 +199,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  form.addEventListener("submit", (e) => {
+  /* ---------- Envoi de la demande par e-mail ----------
+     Le service gratuit FormSubmit reçoit les données du formulaire
+     et les transmet par e-mail à l'adresse ci-dessous. */
+  const TO_EMAIL = "waguesekounick@gmail.com";
+  const ENDPOINT = "https://formsubmit.co/ajax/" + TO_EMAIL;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const submitLabel = submitBtn.textContent;
+
+  const mailtoLink = () => {
+    const subject = `Demande de devis : ${form.elements.service.value}`;
+    const body =
+      `Nom : ${form.elements.nom.value}\n` +
+      `E-mail : ${form.elements.email.value}\n\n` +
+      form.elements.message.value;
+    return `mailto:${TO_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     status.className = "form-status";
     status.textContent = "";
 
+    // 1) Vérification des champs
     const allValid = Object.keys(rules).map(validateField).every(Boolean);
     if (!allValid) {
       status.classList.add("fail");
@@ -211,21 +229,41 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* Sans serveur, on ouvre le logiciel de messagerie du visiteur avec le message prérempli.
-       Pour un envoi automatique, remplacez ce bloc par un appel à un service
-       comme Formspree, EmailJS ou votre propre back-end. */
-    const to = "argas.center@gmail.com";
-    const subject = `Demande de devis : ${form.elements.service.value}`;
-    const body =
-      `Nom : ${form.elements.nom.value}\n` +
-      `E-mail : ${form.elements.email.value}\n\n` +
-      form.elements.message.value;
+    // 2) Piège anti-robots : un humain ne remplit jamais ce champ caché
+    if (form.elements._honey && form.elements._honey.value) return;
 
-    window.location.href =
-      `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // 3) Envoi
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi en cours…";
+    status.textContent = "Envoi de votre demande…";
 
-    status.classList.add("success");
-    status.textContent = "Merci ! Votre message est prêt à être envoyé depuis votre messagerie.";
-    form.reset();
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form), // nom, email, service, message + champs cachés
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && String(result.success) === "true") {
+        status.classList.add("success");
+        status.textContent =
+          "Merci ! Votre demande a bien été envoyée. Nous vous répondons rapidement.";
+        form.reset();
+        form.querySelectorAll(".field").forEach((f) => f.classList.remove("invalid"));
+      } else {
+        throw new Error(result.message || "Envoi refusé");
+      }
+    } catch (err) {
+      // En cas de problème (pas de connexion, service indisponible...), on propose une solution de secours
+      status.classList.add("fail");
+      status.innerHTML =
+        "L'envoi a échoué. Réessayez dans un instant, ou " +
+        `<a href="${mailtoLink()}">envoyez-nous votre demande depuis votre messagerie</a>` +
+        " ou par WhatsApp.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+    }
   });
 });
