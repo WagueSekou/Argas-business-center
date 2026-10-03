@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/hero.css">
 </head>
 <body>
 
@@ -52,27 +53,50 @@
     <section class="hero" id="accueil">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="hero-name">Argas Business Center SARL</p>
-          <h1>One step ahead.</h1>
+          <p class="hero-name"><span>Argas Business Center SARL<span class="hero-name-extra"> · Vente en gros</span></span></p>
+          <h1>One step <span class="accent">ahead.</span></h1>
           <p class="hero-lead">
             Matériel électrique, électrodes de marque SAF et papier en format, vendus en gros :
             tout pour vos chantiers, vos ateliers et vos bureaux, avec un pas d'avance.
           </p>
+
           <div class="hero-actions">
             <a href="#contact" class="btn btn-primary">Demander un devis</a>
-            <a href="#services" class="btn btn-ghost">Voir nos produits</a>
+            <a href="https://wa.me/237677725972" class="btn btn-ghost btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+              Écrire sur WhatsApp
+            </a>
           </div>
+
+          <ul class="hero-points">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Prix de gros</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Devis détaillé</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Marque SAF</li>
+          </ul>
         </div>
 
-        <!-- Escalier : le moment visuel de la page -->
-        <div class="stairs" aria-hidden="true">
-          <div class="step step-1"><span>Demande</span></div>
-          <div class="step step-2"><span>Devis</span></div>
-          <div class="step step-3"><span>Commande</span></div>
-          <div class="step step-4"><span>Livraison</span></div>
+        <!-- Escalier : le chemin d'une commande, marche après marche -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="stairs">
+            <div class="step step-1"><span>Demande</span></div>
+            <div class="step step-2"><span>Devis</span></div>
+            <div class="step step-3"><span>Commande</span></div>
+            <div class="step step-4"><span>Livraison</span></div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Bande de produits (fixe) -->
+    <div class="strip">
+      <ul class="container strip-list">
+        <li>Matériel électrique</li>
+        <li>Câbles</li>
+        <li>Gaines</li>
+        <li>Électrodes SAF</li>
+        <li>Papeterie</li>
+      </ul>
+    </div>
 
     <!-- ============ SLIDER ============ -->
     <section class="showcase" aria-label="Nos produits en images">

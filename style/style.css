@@ -710,3 +710,197 @@ img, svg { max-width: 100%; }
   .step { animation: none; }
   * { transition-duration: 0.01ms !important; }
 }
+/* =========================================================
+   SECTION D'ACCUEIL (version claire et sobre) : hero.css
+   À charger APRÈS style.css
+   Seule animation : les marches de l'escalier se lèvent une fois.
+   ========================================================= */
+
+/* ---------- Fond clair ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(3rem, 7vw, 5rem);
+  background:
+    radial-gradient(46rem 30rem at 86% 45%, rgba(44, 155, 74, 0.11), transparent 66%),
+    radial-gradient(38rem 26rem at 98% 0%, rgba(52, 68, 154, 0.09), transparent 62%),
+    linear-gradient(180deg, #ffffff 0%, #f5f9f7 100%);
+}
+
+.hero .hero-grid {
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* ---------- Texte ---------- */
+.hero-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-weight: 600;
+  color: var(--green-deep);
+}
+.hero-name::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--green);
+  flex: none;
+}
+
+.hero h1 {
+  font-size: clamp(3.4rem, 9vw, 6.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 .accent { color: var(--green); }
+
+.hero .hero-lead {
+  font-size: 1.18rem;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+.btn-wa { display: inline-flex; align-items: center; gap: 0.55rem; }
+.btn-wa svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin-top: 1.9rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.hero-points li { display: flex; align-items: center; gap: 0.45rem; }
+.hero-points svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--green-deep);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Escalier ---------- */
+.hero-visual { position: relative; }
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  bottom: -1px;
+  height: 2px;
+  background: var(--line);
+}
+
+.hero .stairs { gap: 8px; }
+.hero .step {
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 22px 34px -26px rgba(35, 47, 110, 0.6);
+}
+.hero .step-2 { background: #5b69b0; }          /* plus foncé : texte blanc bien lisible */
+
+/* ---------- Bande de produits ---------- */
+.strip {
+  background: var(--mist);
+  border-block: 1px solid var(--line);
+}
+.strip-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 0;
+  padding: 1rem 0;
+}
+.strip-list li {
+  position: relative;
+  padding: 0 1.4rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  color: var(--blue);
+}
+.strip-list li + li::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+
+/* Espace réduit entre l'accueil et le slider */
+.hero { padding-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+.showcase { padding-top: clamp(1.25rem, 3vw, 2rem); }
+
+/* ---------- Tablette et mobile ---------- */
+@media (max-width: 900px) {
+  .hero .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { margin-top: 0.5rem; }
+}
+
+@media (max-width: 600px) {
+  .hero-name { font-size: 0.84rem; gap: 0.5rem; }
+  .hero-name::before { width: 18px; }
+  .hero-name-extra { display: none; }
+  .hero h1 { font-size: clamp(3.1rem, 17vw, 4rem); }
+  .hero .hero-lead { font-size: 1.05rem; }
+  .hero-actions .btn { width: 100%; justify-content: center; text-align: center; }
+  .hero .stairs { gap: 5px; height: 260px; }
+
+  /* les noms des marches restent horizontaux */
+  .hero .step { justify-content: flex-start; padding: 0.7rem 0.45rem; }
+  .hero .step span {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 0.78rem;
+  }
+  .strip-list li { padding: 0 0.9rem; font-size: 0.95rem; }
+}
+@media (max-width: 360px) {
+  .hero .step span { font-size: 0.7rem; }
+}
+
+/* ---------- Correctif en-tête : tablette ----------
+   Les liens du menu se coupaient sur 2 lignes entre 760 et 900 px.
+   Le menu burger s'affiche donc dès 900 px. */
+.nav a { white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .nav-toggle { display: flex; }
+
+  .nav {
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 24px -16px rgba(35, 47, 110, 0.4);
+    padding: 0.75rem 1.25rem 1.25rem;
+    display: none;
+  }
+  .nav.open { display: block; }
+  .nav ul { flex-direction: column; align-items: stretch; gap: 0.15rem; }
+  .nav a { padding: 0.85rem 0.9rem; }
+  .nav a.nav-cta { margin: 0.5rem 0 0; text-align: center; }
+}
