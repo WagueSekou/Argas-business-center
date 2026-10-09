@@ -267,3 +267,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+/* =========================================================
+   SLIDER : slider.js
+   Donne à chaque diapositive la photo en fond flou (voir slider.css).
+   Ne change rien au fonctionnement du slider (script.js).
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("#slider .slide").forEach((slide) => {
+    const img = slide.querySelector("img");
+    if (!img) return;
+
+    const apply = () => {
+      const src = img.currentSrc || img.src;
+      if (src) slide.style.setProperty("--bg", `url("${src}")`);
+    };
+
+    apply();
+    if (!img.complete) img.addEventListener("load", apply, { once: true });
+  });
+});
